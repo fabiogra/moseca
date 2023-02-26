@@ -1,18 +1,13 @@
 import logging
 import os
 from pathlib import Path
-from shutil import rmtree
 
-from pydub import AudioSegment
+import requests
 import streamlit as st
 
-# from lib.st_custom_components import st_audiorec
-
-try:
-    from app.demucs_runner import separator
-except ImportError:
-    from demucs_runner import separator
-
+from demucs_runner import separator
+from lib.st_custom_components import st_audiorec
+from helpers import load_audio_segment, plot_audio
 
 logging.basicConfig(
     format="%(asctime)s %(levelname)-8s %(message)s",
@@ -34,37 +29,28 @@ int24 = False  # output as int24 wavs, unused if 'mp3' is True.
 # You cannot set both `float32 = True` and `int24 = True` !!
 
 
-def find_files(in_path):
-    out = []
-    for file in Path(in_path).iterdir():
-        if file.suffix.lower().lstrip(".") in extensions:
-            out.append(file)
-    return out
+out_path = Path("/tmp")
+in_path = Path("/tmp")
 
-out_path = Path("tmp")
-in_path = Path("tmp")
-
-# def clean_folders():
-#     if in_path.exists():
-#         rmtree(in_path)
-#     in_path.mkdir()
-#     if out_path.exists():
-#         rmtree(out_path)
-#     out_path.mkdir()
     
 def url_is_valid(url):
-    import requests
+    if url.startswith("http") is False:
+        st.error("URL should start with http or https.")
+        return False
+    elif url.split(".")[-1] not in extensions:
+        st.error("Extension not supported.")
+        return False
     try:
         r = requests.get(url)
         r.raise_for_status()
         return True
     except Exception:
         st.error("URL is not valid.")
+        return False
 
 
 def run():
     st.markdown("<h1><center>🎶 Music Source Splitter</center></h1>", unsafe_allow_html=True)
-
     st.markdown("""
                 <style>
                 .st-af {
@@ -80,52 +66,42 @@ def run():
     filename = None
     choice =  st.radio(label=" ", options=["🔗 From URL", "⬆️ Upload File", "🎤 Record Audio"], horizontal=True)
     if choice == "🔗 From URL":
-        url = st.text_input("Paste the URL of the audio file", key="url")
+        url = st.text_input("Paste the URL of the audio file", key="url", help="Supported formats: mp3, wav, ogg, flac.")
         if url != "":
             # check if the url is valid
             if url_is_valid(url):
                 with st.spinner("Downloading audio..."):
-                    #clean_folders()
                     filename = url.split("/")[-1]
                     os.system(f"wget -O {in_path / filename} {url}")
             
     elif choice == "⬆️ Upload File":
-        uploaded_file = st.file_uploader("Choose a file")
+        uploaded_file = st.file_uploader("Choose a file", type=extensions, key="file", help="Supported formats: mp3, wav, ogg, flac.")
         if uploaded_file is not None:
-            #clean_folders()
             with open(in_path / uploaded_file.name, "wb") as f:
                 f.write(uploaded_file.getbuffer())    
             filename = uploaded_file.name        
     elif choice == "🎤 Record Audio":
-        # wav_audio_data = st_audiorec()
-        # if wav_audio_data is not None:
-        #     if wav_audio_data != b'RIFF,\x00\x00\x00WAVEfmt \x10\x00\x00\x00\x01\x00\x02\x00\x80>\x00\x00\x00\xfa\x00\x00\x04\x00\x10\x00data\x00\x00\x00\x00':
-        #         clean_folders()
-        #         filename = "recording.wav"
-        #         with open(in_path / filename, "wb") as f:
-        #             f.write(wav_audio_data)
-        pass
+        wav_audio_data = st_audiorec()
+        if wav_audio_data is not None:
+            if wav_audio_data != b'RIFF,\x00\x00\x00WAVEfmt \x10\x00\x00\x00\x01\x00\x02\x00\x80>\x00\x00\x00\xfa\x00\x00\x04\x00\x10\x00data\x00\x00\x00\x00':
+                filename = "recording.wav"
+                with open(in_path / filename, "wb") as f:
+                    f.write(wav_audio_data)                
                 
     if filename is not None:
-        st.markdown("<hr>", unsafe_allow_html=True)
-        cols = st.columns(2)
-        with cols[0]:
-            st.markdown("<h3>Original Audio</h3>", unsafe_allow_html=True)
-        with cols[1]:
-            audio_file = open(in_path / filename, "rb")
-            audio_bytes = audio_file.read()
-            _ = st.audio(audio_bytes)
+        song = load_audio_segment(in_path / filename, filename.split(".")[-1])
         
-        song = AudioSegment.from_file(in_path / filename, filename.split(".")[-1])
         n_secs = round(len(song) / 1000)
-        start_time = st.slider("Choose the start time", min_value=0, max_value=n_secs, value=0, help=f"Maximum duration is {max_duration} seconds.")
+        audio_file = open(in_path / filename, "rb")
+        audio_bytes = audio_file.read()
+        start_time = st.slider("Choose the start time", min_value=0, max_value=n_secs, step=1, value=0, help=f"Maximum duration is {max_duration} seconds.")
+        _ = st.audio(audio_bytes, start_time=start_time)
         end_time = min(start_time + max_duration, n_secs)
+        song = song[start_time*1000:end_time*1000]
         tot_time = end_time - start_time
         st.info(f"Audio source will be processed from {start_time} to {end_time} seconds.", icon="⏱")
-         
         execute = st.button("Split Music 🎶", type="primary")
         if execute:
-            song = song[start_time*1000:end_time*1000]
             song.export(in_path / filename, format=filename.split(".")[-1])
             with st.spinner(f"Splitting source audio, it will take almost {round(tot_time*3.6)} seconds..."):
                 separator(
@@ -144,22 +120,25 @@ def run():
                     jobs=os.cpu_count(),
                     verbose=True,
                 )
-                pass
+
             last_dir = ".".join(filename.split(".")[:-1])
             for file in ["vocals.mp3", "drums.mp3", "bass.mp3", "other.mp3"]:
                 file = out_path / Path(model) / last_dir / file
                 st.markdown("<hr>", unsafe_allow_html=True)
+                label = file.name.split(".")[0].replace("_", " ").capitalize()
+                # add emoji to label
+                label = {
+                    "Drums": "🥁",
+                    "Bass": "🎸",
+                    "Other": "🎹",
+                    "Vocals": "🎤",
+                }.get(label) + " " + label
+                st.markdown("<center><h3>" + label + "</h3></center>", unsafe_allow_html=True)
+ 
                 cols = st.columns(2)
                 with cols[0]:
-                    label = file.name.split(".")[0].replace("_", " ").capitalize()
-                    # add emoji to label
-                    label = {
-                        "Drums": "🥁",
-                        "Bass": "🎸",
-                        "Other": "🎹",
-                        "Vocals": "🎤",
-                    }.get(label) + " " + label
-                    st.markdown("<h3>" + label + "</h3>", unsafe_allow_html=True)
+                   auseg = load_audio_segment(file, "mp3")
+                   plot_audio(auseg)
                 with cols[1]:
                     audio_file = open(file, "rb")
                     audio_bytes = audio_file.read()

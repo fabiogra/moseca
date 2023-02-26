@@ -41,8 +41,8 @@ def find_files(in_path):
             out.append(file)
     return out
 
-out_path = Path("separated")
-in_path = Path("tmp_in")
+out_path = Path("tmp")
+in_path = Path("tmp")
 
 # def clean_folders():
 #     if in_path.exists():

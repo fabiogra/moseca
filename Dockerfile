@@ -1,17 +1,16 @@
 FROM python:3.9
 
-WORKDIR /src
 
 RUN pip install --user --upgrade pip
 
 RUN apt-get update && apt-get install -y ffmpeg
 
-COPY requirements.txt ./
-
+COPY . .
 
 RUN pip install --no-cache-dir -r requirements.txt
 
-COPY . .
+RUN mkdir -p /tmq
+RUN chmod 777 /tmp
 
 ENV PYTHONPATH "${PYTHONPATH}:/app"
 

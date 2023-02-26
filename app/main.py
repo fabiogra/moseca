@@ -97,13 +97,14 @@ def run():
                 f.write(uploaded_file.getbuffer())    
             filename = uploaded_file.name        
     elif choice == "🎤 Record Audio":
-        wav_audio_data = st_audiorec()
-        if wav_audio_data is not None:
-            if wav_audio_data != b'RIFF,\x00\x00\x00WAVEfmt \x10\x00\x00\x00\x01\x00\x02\x00\x80>\x00\x00\x00\xfa\x00\x00\x04\x00\x10\x00data\x00\x00\x00\x00':
-                clean_folders()
-                filename = "recording.wav"
-                with open(in_path / filename, "wb") as f:
-                    f.write(wav_audio_data)                
+        # wav_audio_data = st_audiorec()
+        # if wav_audio_data is not None:
+        #     if wav_audio_data != b'RIFF,\x00\x00\x00WAVEfmt \x10\x00\x00\x00\x01\x00\x02\x00\x80>\x00\x00\x00\xfa\x00\x00\x04\x00\x10\x00data\x00\x00\x00\x00':
+        #         clean_folders()
+        #         filename = "recording.wav"
+        #         with open(in_path / filename, "wb") as f:
+        #             f.write(wav_audio_data)
+        pass
                 
     if filename is not None:
         st.markdown("<hr>", unsafe_allow_html=True)
@@ -127,22 +128,22 @@ def run():
             song = song[start_time*1000:end_time*1000]
             song.export(in_path / filename, format=filename.split(".")[-1])
             with st.spinner(f"Splitting source audio, it will take almost {round(tot_time*3.6)} seconds..."):
-                separator(
-                    tracks=[in_path / filename],
-                    out=out_path,
-                    model=model,
-                    device="cpu",
-                    shifts=1,
-                    overlap=0.5,
-                    stem=two_stems,
-                    int24=int24,
-                    float32=float32,
-                    clip_mode="rescale",
-                    mp3=mp3,
-                    mp3_bitrate=mp3_rate,
-                    jobs=os.cpu_count(),
-                    verbose=True,
-                )
+                # separator(
+                #     tracks=[in_path / filename],
+                #     out=out_path,
+                #     model=model,
+                #     device="cpu",
+                #     shifts=1,
+                #     overlap=0.5,
+                #     stem=two_stems,
+                #     int24=int24,
+                #     float32=float32,
+                #     clip_mode="rescale",
+                #     mp3=mp3,
+                #     mp3_bitrate=mp3_rate,
+                #     jobs=os.cpu_count(),
+                #     verbose=True,
+                # )
 
             last_dir = ".".join(filename.split(".")[:-1])
             for file in ["vocals.mp3", "drums.mp3", "bass.mp3", "other.mp3"]:

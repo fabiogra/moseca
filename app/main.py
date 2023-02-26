@@ -8,10 +8,10 @@ import streamlit as st
 
 # from lib.st_custom_components import st_audiorec
 
-# try:
-#     from app.demucs_runner import separator
-# except ImportError:
-#     from demucs_runner import separator
+try:
+    from app.demucs_runner import separator
+except ImportError:
+    from demucs_runner import separator
 
 
 logging.basicConfig(
@@ -128,22 +128,22 @@ def run():
             song = song[start_time*1000:end_time*1000]
             song.export(in_path / filename, format=filename.split(".")[-1])
             with st.spinner(f"Splitting source audio, it will take almost {round(tot_time*3.6)} seconds..."):
-                # separator(
-                #     tracks=[in_path / filename],
-                #     out=out_path,
-                #     model=model,
-                #     device="cpu",
-                #     shifts=1,
-                #     overlap=0.5,
-                #     stem=two_stems,
-                #     int24=int24,
-                #     float32=float32,
-                #     clip_mode="rescale",
-                #     mp3=mp3,
-                #     mp3_bitrate=mp3_rate,
-                #     jobs=os.cpu_count(),
-                #     verbose=True,
-                # )
+                separator(
+                    tracks=[in_path / filename],
+                    out=out_path,
+                    model=model,
+                    device="cpu",
+                    shifts=1,
+                    overlap=0.5,
+                    stem=two_stems,
+                    int24=int24,
+                    float32=float32,
+                    clip_mode="rescale",
+                    mp3=mp3,
+                    mp3_bitrate=mp3_rate,
+                    jobs=os.cpu_count(),
+                    verbose=True,
+                )
                 pass
             last_dir = ".".join(filename.split(".")[:-1])
             for file in ["vocals.mp3", "drums.mp3", "bass.mp3", "other.mp3"]:

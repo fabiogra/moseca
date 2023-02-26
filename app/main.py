@@ -144,7 +144,7 @@ def run():
                 #     jobs=os.cpu_count(),
                 #     verbose=True,
                 # )
-
+                pass
             last_dir = ".".join(filename.split(".")[:-1])
             for file in ["vocals.mp3", "drums.mp3", "bass.mp3", "other.mp3"]:
                 file = out_path / Path(model) / last_dir / file

@@ -11,6 +11,7 @@ RUN pip install --no-cache-dir -r requirements.txt
 
 RUN mkdir -p /tmq
 RUN chmod 777 /tmp
+RUN chmod 777 /.cache
 
 ENV PYTHONPATH "${PYTHONPATH}:/app"
 

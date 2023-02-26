@@ -1,8 +1,8 @@
 ---
 title: Test Space
-emoji: 👀
+emoji: 🎶
 colorFrom: indigo
-colorTo: blue
+colorTo: yellow
 sdk: docker
 pinned: false
 ---

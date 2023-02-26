@@ -44,13 +44,13 @@ def find_files(in_path):
 out_path = Path("separated")
 in_path = Path("tmp_in")
 
-def clean_folders():
-    if in_path.exists():
-        rmtree(in_path)
-    in_path.mkdir()
-    if out_path.exists():
-        rmtree(out_path)
-    out_path.mkdir()
+# def clean_folders():
+#     if in_path.exists():
+#         rmtree(in_path)
+#     in_path.mkdir()
+#     if out_path.exists():
+#         rmtree(out_path)
+#     out_path.mkdir()
     
 def url_is_valid(url):
     import requests
@@ -85,14 +85,14 @@ def run():
             # check if the url is valid
             if url_is_valid(url):
                 with st.spinner("Downloading audio..."):
-                    clean_folders()
+                    #clean_folders()
                     filename = url.split("/")[-1]
                     os.system(f"wget -O {in_path / filename} {url}")
             
     elif choice == "⬆️ Upload File":
         uploaded_file = st.file_uploader("Choose a file")
         if uploaded_file is not None:
-            clean_folders()
+            #clean_folders()
             with open(in_path / uploaded_file.name, "wb") as f:
                 f.write(uploaded_file.getbuffer())    
             filename = uploaded_file.name        

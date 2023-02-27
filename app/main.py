@@ -4,10 +4,12 @@ from pathlib import Path
 
 import requests
 import streamlit as st
+from app.examples import show_examples
 
 from demucs_runner import separator
 from lib.st_custom_components import st_audiorec
 from helpers import load_audio_segment, plot_audio
+from sidebar import text as text_side
 
 logging.basicConfig(
     format="%(asctime)s %(levelname)-8s %(message)s",
@@ -51,6 +53,8 @@ def url_is_valid(url):
 
 def run():
     st.markdown("<h1><center>🎶 Music Source Splitter</center></h1>", unsafe_allow_html=True)
+    st.markdown("<center><i>Hight Quality Audio Source Separation</i></center>", unsafe_allow_html=True)
+    st.sidebar.markdown(text_side, unsafe_allow_html=True)
     st.markdown("""
                 <style>
                 .st-af {
@@ -146,3 +150,6 @@ def run():
                     
 if __name__ == "__main__":
     run()
+    st.markdown("<br><br>", unsafe_allow_html=True)
+    with st.expander("Show examples", expanded=False):
+        show_examples()

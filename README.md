@@ -10,12 +10,14 @@ pinned: true
 Check out the configuration reference at https://huggingface.co/docs/hub/spaces-config-reference
 
 # Music Source Splitter 🎶
+> Extract vocals, drums, bass, and other from a music track.
+
 <a href="https://huggingface.co/spaces/fabiogra/st-music-splitter"><img src="https://img.shields.io/badge/🤗%20Hugging%20Face-Spaces-blue" alt="Hugging Face Spaces"></a>
 
+![preview](preview.gif)
 
-This is a streamlit demo of the [Music Source Separation](https://huggingface.co/spaces/fabiogra/st-music-splitter).
+This is a streamlit demo of Music Source Splitter published in [HuggingFace](https://huggingface.co/spaces/fabiogra/st-music-splitter).
 
-The model can separate the vocals, drums, bass, and other from a music track.
 
 ## Usage
 

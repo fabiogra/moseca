@@ -1,5 +1,5 @@
 ---
-title: Test Moseca
+title: Moseca
 emoji: 🎤🎸🥁🎹
 colorFrom: yellow
 colorTo: purple
@@ -18,7 +18,7 @@ pinned: true
 
 
 </a>
-<a href="https://huggingface.co/spaces/fabiogra/moseca?duplicate=true">
+<a href="https://huggingface.co/spaces/fabiogra/moseca">
 <img src="https://img.shields.io/badge/🤗%20Hugging%20Face-Spaces-blue"
 alt="Hugging Face Spaces"></a>
 <a href="https://huggingface.co/spaces/fabiogra/moseca/discussions?docker=true">

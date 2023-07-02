@@ -1,15 +1,3 @@
----
-title: Moseca
-emoji: 🎤🎸🥁🎹
-colorFrom: yellow
-colorTo: purple
-sdk: docker
-app_port: 7860
-models: ["https://huggingface.co/fabiogra/baseline_vocal_remover"]
-tags: ["audio", "music", "vocal-removal", "karaoke", "music-separation", "music-source-separation"]
-pinned: true
----
-
 <p align="center">
   <img src="img/logo_moseca.png" alt="logo" width="70" />
 </p>
@@ -87,7 +75,7 @@ Moseca is for you.
 
 ### High-Quality Stem Separation
 
-<img title="High-Quality Stem Separation" src="https://i.imgur.com/l7H8YWL.png" width="250" ></img>
+<img title="High-Quality Stem Separation" src="img/image_stems.png" width="250" ></img>
 
 
 <br>
@@ -99,7 +87,7 @@ Separate up to 6 stems including 🗣voice, 🥁drums, 🔉bass, 🎸guitar,
 
 ### Advanced AI Algorithms
 
-<img title="Advanced AI Algorithms" src="https://i.imgur.com/I8Pvdav.png" width="250" ></img>
+<img title="Advanced AI Algorithms" src="img/state-of-art.png" width="250" ></img>
 
 <br>
 
@@ -110,7 +98,7 @@ your original songs accurately.
 
 ### Karaoke Fun
 
-<img title="Karaoke Fun" src="https://i.imgur.com/nsn3JGV.png" width="250" ></img>
+<img title="Karaoke Fun" src="img/karaoke_fun.png" width="250" ></img>
 
 <br>
 

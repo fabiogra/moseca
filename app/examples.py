@@ -8,7 +8,7 @@ def _load_example(name: str):
     cols = st.columns(2)
     with cols[0]:
         auseg = load_audio_segment(f"samples/{name}", "mp3")
-        plot_audio(auseg)
+        plot_audio(auseg, step=50)
     with cols[1]:
         audio_file = open(f"samples/{name}", "rb")
         audio_bytes = audio_file.read()
@@ -28,7 +28,7 @@ def _load_example(name: str):
         cols = st.columns(2)
         with cols[0]:
             auseg = load_audio_segment(f"samples/{name.split('.mp3')[0]}/{file}", "mp3")
-            plot_audio(auseg)
+            plot_audio(auseg, step=50)
         with cols[1]:
             audio_file = open(f"samples/{name.split('.mp3')[0]}/{file}", "rb")
             audio_bytes = audio_file.read()
@@ -37,18 +37,18 @@ def _load_example(name: str):
 
 def show_examples():
     with st.columns([2, 8, 1])[1]:
-        selection = st.selectbox("Select an example music to quickly see results", ["Push - Coma Media",  "Indie Rock", "Something About You - Marilyn Ford"])
-    if selection == "Push - Coma Media":
-        _load_example("push-coma-media.mp3")
-        link = "https://pixabay.com/users/coma-media-24399569/"
+        selection = st.selectbox("Select an example music to quickly see results", ["Something About You - Marilyn Ford", "Broke Me - FASSounds", "Indie Rock"])
+    if selection == "Broke Me - FASSounds":
+        _load_example("broke-me-fassounds.mp3")
+        link = "https://pixabay.com/users/fassounds-3433550/"
         st.markdown(
-            f"""Music by <a href="{link}">Coma-Media</a> from <a href="{link}">Pixabay</a>""",
+            f"""Music by <a href="{link}">FASSounds</a> from <a href="{link}">Pixabay</a>""",
             unsafe_allow_html=True)
     elif selection == "Indie Rock":
         _load_example("indie-rock.mp3")
         link = "https://pixabay.com/music/indie-rock-112771/"
         st.markdown(
-            f"""Music by <a href={link}">Music_Unlimited</a> from <a href="{link}">Pixabay</a>""",
+            f"""Music by <a href="{link}">Music_Unlimited</a> from <a href="{link}">Pixabay</a>""",
             unsafe_allow_html=True)
     elif selection == "Something About You - Marilyn Ford":
         _load_example("something-about-you-marilyn-ford.mp3")

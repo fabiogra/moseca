@@ -27,7 +27,7 @@ in_path = Path("/tmp")
 sess = st.session_state
 
 
-def show_karaoke(pathname, initial_player):
+def show_karaoke(pathname):
     cols = st.columns([1, 1, 3, 1])
     with cols[1]:
         sess.delay = st.slider(
@@ -62,10 +62,15 @@ def show_karaoke(pathname, initial_player):
         unsafe_allow_html=True,
     )
     with st.columns([1, 4, 1])[1]:
-        if events.name == "onProgress" and events.data["playedSeconds"] > 0:
-            initial_player.empty()
+        if events.name == "onPlay":
+            st.session_state.player_restart = True
+
+        elif events.name == "onProgress":
+            if st.session_state.player_restart:
+                sess.tot_delay = sess.delay + events.data["playedSeconds"]
+                st.session_state.player_restart = False
             st_player(
-                sess.url + f"&t={sess.delay}s",
+                sess.url + f"&t={sess.tot_delay}s",
                 **{
                     "progress_interval": 1000,
                     "playing": True,
@@ -167,7 +172,7 @@ def body():
                     sess.executed = True
 
         if sess.executed:
-            show_karaoke(out_path / "vocal_remover" / sess.last_dir / "no_vocals.mp3", player)
+            show_karaoke(out_path / "vocal_remover" / sess.last_dir / "no_vocals.mp3")
 
 
 if __name__ == "__main__":

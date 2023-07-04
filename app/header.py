@@ -25,9 +25,12 @@ def header(logo_and_title=True):
             "url",
             "random_song",
             "last_dir",
+            "player_restart",
         ]:
             st.session_state[key] = None
         st.session_state.video_options = []
+        st.session_state.tot_delay = 0
+    if "page" not in st.session_state:
         st.session_state.page = "Karaoke"
         switch_page(st.session_state.page)
 

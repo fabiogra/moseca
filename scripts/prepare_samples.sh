@@ -1,10 +1,8 @@
 #!/bin/bash
 
-# Check if the "PREPARE_SAMPLES" environment variable is set
-output=$(python -c "import os; print('0' if not os.getenv('PREPARE_SAMPLES') else '1')")
-
-if [ "$output" -eq "0" ]; then
-    echo "PREPARE_SAMPLES is unset or set to the empty string. Skipping sample preparation."
+# Check if the "DISABLE_SAMPLES" environment variable is set
+if [ -n "${DISABLE_SAMPLES}" ]; then
+    echo "DISABLE_SAMPLES is set. Skipping sample preparation."
     exit 0
 fi
 

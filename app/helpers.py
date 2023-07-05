@@ -1,4 +1,6 @@
 import json
+import logging
+import os
 import random
 from base64 import b64encode
 from io import BytesIO
@@ -17,6 +19,11 @@ from streamlit_player import st_player
 extensions = ["mp3", "wav", "ogg", "flac"]  # we will look for all those file types.
 
 
+def check_file_availability(url):
+    exit_status = os.system(f"wget --spider {url}")
+    return exit_status == 0
+
+
 @st.cache_data(show_spinner=False)
 def url_is_valid(url):
     if url.startswith("http") is False:
@@ -29,6 +36,16 @@ def url_is_valid(url):
         r = requests.get(url)
         r.raise_for_status()
         return True
+    except requests.exceptions.HTTPError as err:
+        msg = (
+            "requests get failed with status code "
+            + str(err.response.status_code)
+            + " for url "
+            + url
+            + ". Try wget spider."
+        )
+        logging.error(msg)
+        return check_file_availability(url)
     except Exception:
         st.error("URL is not valid.")
         return False

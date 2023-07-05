@@ -75,6 +75,9 @@ docker run -it -p 7860:7860 --platform=linux/amd64 \
 You can set the following environment variables to limit the resources used by the app:
 - ENV_LIMITATION=true
 - LIMIT_CPU=true
+
+If you want to use a prepare the samples used in the demo, you need to set the env variable `PREPARE_SAMPLES=true`
+
 ---
 ## About
 

@@ -66,10 +66,12 @@ def plot_audio(_audio_segment: AudioSegment, *args, **kwargs) -> Image.Image:
 
 @st.cache_data(show_spinner=False)
 def load_list_of_songs(path="sample_songs.json"):
-    if os.environ.get("DISABLE_SAMPLES") is None:
+    if os.environ.get("PREPARE_SAMPLES"):
         return json.load(open(path))
     else:
-        st.error("`DISABLE_SAMPLES` is set. No examples available.")
+        st.error(
+            "No examples available. You need to set the environment variable `PREPARE_SAMPLES=true`"
+        )
 
 
 def get_random_song():

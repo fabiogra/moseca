@@ -28,7 +28,6 @@ RUN chmod +x prepare_samples.sh
 EXPOSE 7860
 
 HEALTHCHECK CMD curl --fail http://localhost:7860/_stcore/health
-
-RUN ["./prepare_samples.sh"]
+RUN --mount=type=secret,id=SECRET_EXAMPLE,mode=0444,required=true ./prepare_samples.sh
 
 ENTRYPOINT ["streamlit", "run", "app/header.py", "--server.port=7860", "--server.address=0.0.0.0"]

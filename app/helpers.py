@@ -1,6 +1,8 @@
-import random
-from io import BytesIO
 import json
+import random
+from base64 import b64encode
+from io import BytesIO
+from pathlib import Path
 
 import matplotlib.pyplot as plt
 import numpy as np
@@ -8,28 +10,11 @@ import requests
 import streamlit as st
 from PIL import Image
 from pydub import AudioSegment
-from base64 import b64encode
-from pathlib import Path
 from streamlit.runtime.scriptrunner import RerunData, RerunException
 from streamlit.source_util import get_pages
 from streamlit_player import st_player
 
 extensions = ["mp3", "wav", "ogg", "flac"]  # we will look for all those file types.
-example_songs = [1, 2, 3]
-
-
-def img_to_bytes(img_path):
-    img_bytes = Path(img_path).read_bytes()
-    encoded = b64encode(img_bytes).decode()
-    return encoded
-
-
-# @st.cache_data(show_spinner=False)
-def img_to_html(img_path):
-    img_html = "<div style='display: flex; justify-content: center; align-items: center; height: 50vh;'><img src='data:image/png;base64,{}' class='img-fluid' style='max-width: 100%; max-height: 100%;' ></div>".format(
-        img_to_bytes(img_path)
-    )
-    return img_html
 
 
 @st.cache_data(show_spinner=False)
@@ -76,8 +61,13 @@ def plot_audio(_audio_segment: AudioSegment, *args, **kwargs) -> Image.Image:
     return image
 
 
+@st.cache_data(show_spinner=False)
+def load_list_of_songs():
+    return json.load(open("sample_songs.json"))
+
+
 def get_random_song():
-    sample_songs = json.load(open("sample_songs.json"))
+    sample_songs = load_list_of_songs()
     name, url = random.choice(list(sample_songs.items()))
     return name, url
 

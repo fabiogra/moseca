@@ -1,11 +1,16 @@
+import logging
 import os
-from typing import List
-import yt_dlp
+import re
 import string
 import time
-import re
+from typing import List
+
 import streamlit as st
+import yt_dlp
 from pytube import Search
+
+logger = logging.getLogger("pytube")
+logger.setLevel(logging.ERROR)
 
 
 def _sanitize_filename(filename):
@@ -24,7 +29,7 @@ def download_audio_from_youtube(url, output_path):
 
     with yt_dlp.YoutubeDL() as ydl:
         info_dict = ydl.extract_info(url, download=False)
-    if info_dict.get("duration") > 360:
+    if info_dict.get("duration", 0) > 360:
         st.error("Song is too long. Please use a song no longer than 6 minutes.")
         return
     video_title = info_dict.get("title", None)

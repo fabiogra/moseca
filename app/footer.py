@@ -1,8 +1,7 @@
 import streamlit as st
-
-from streamlit.components.v1 import html
-from htbuilder import HtmlElement, div, a, p, img, styles
+from htbuilder import HtmlElement, a, div, img, p, styles
 from htbuilder.units import percent, px
+from streamlit.components.v1 import html
 
 
 def image(src_as_string, **style):
@@ -50,10 +49,7 @@ def layout(*args):
     st.markdown(style, unsafe_allow_html=True)
 
     for arg in args:
-        if isinstance(arg, str):
-            body(arg)
-
-        elif isinstance(arg, HtmlElement):
+        if isinstance(arg, str) or isinstance(arg, HtmlElement):
             body(arg)
 
     st.markdown(str(foot), unsafe_allow_html=True)

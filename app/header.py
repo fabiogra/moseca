@@ -1,10 +1,9 @@
-import streamlit as st
-
-from helpers import switch_page
-from style import CSS
 import logging
 
+import streamlit as st
+from helpers import switch_page
 from streamlit_option_menu import option_menu
+from style import CSS
 
 logging.basicConfig(
     format="%(asctime)s %(levelname)-8s %(message)s",
@@ -17,7 +16,6 @@ def header(logo_and_title=True):
     if "first_run" not in st.session_state:
         st.session_state.first_run = True
         for key in [
-            "search_results",
             "selected_value",
             "filename",
             "executed",
@@ -30,6 +28,8 @@ def header(logo_and_title=True):
             st.session_state[key] = None
         st.session_state.video_options = []
         st.session_state.tot_delay = 0
+    if "search_results" not in st.session_state:
+        st.session_state.search_results = []
     if "page" not in st.session_state:
         st.session_state.page = "Karaoke"
         switch_page(st.session_state.page)

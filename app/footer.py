@@ -39,7 +39,7 @@ def layout(*args):
         style=styles(
             margin=px(0, 0, 0, 0),
             padding=px(5),
-            font_size="0.8rem",
+            font_size="0.9rem",
             color="rgb(51,51,51)",
             font_family="Exo",
         ),
@@ -98,12 +98,12 @@ def layout(*args):
 
 def footer():
     myargs = [
-        "Made in ",
+        "Made in 🇮🇹 with ",
         link(
             "https://streamlit.io/",
-            image("https://streamlit.io/images/brand/streamlit-mark-color.png", width="20px"),
+            image("https://streamlit.io/images/brand/streamlit-mark-color.png", width="18px"),
         ),
-        " with ❤️ by ",
+        " by ",
         link("https://twitter.com/grsFabio", "@grsFabio"),
         "&nbsp;&nbsp;&nbsp;",
         link(

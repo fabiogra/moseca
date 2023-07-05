@@ -88,11 +88,15 @@ def body():
     filename = None
     name_song = None
     st.markdown(
-        """
-                <style>
-                    div[data-baseweb="tab-list"] {
-        align-items: center !important;
-        justify-content: center !important;
+        """<style>
+        div[data-baseweb="tab-list"] {
+            display: flex !important;
+            align-items: center !important;
+            justify-content: space-evenly !important;
+            flex-wrap: wrap !important;
+                .css-q8sbsg.e16nr0p34 p{
+                    font-size: 1.1rem !important;
+                }
         }
         </style>""",
         unsafe_allow_html=True,
@@ -209,8 +213,10 @@ def body():
         else:
             start_time = 0
             end_time = n_secs
-        with st.columns([1, 3, 1])[1]:
-            execute = st.button("Split Music 🎶", type="primary", use_container_width=True)
+        with st.columns([2, 1, 2])[1]:
+            execute = st.button(
+                "Separate Music Sources 🎶", type="primary", use_container_width=True
+            )
             if execute or st.session_state.executed:
                 if execute:
                     st.session_state.executed = False

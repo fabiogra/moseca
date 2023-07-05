@@ -14,3 +14,4 @@ resampy==0.4.2
 stqdm==0.0.5
 streamlit_option_menu==0.3.6
 htbuilder==0.6.1
+loguru==0.7.0

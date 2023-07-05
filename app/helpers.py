@@ -1,5 +1,4 @@
 import json
-import logging
 import os
 import random
 from base64 import b64encode
@@ -8,7 +7,6 @@ from pathlib import Path
 
 import matplotlib.pyplot as plt
 import numpy as np
-import requests
 import streamlit as st
 from PIL import Image
 from pydub import AudioSegment
@@ -20,7 +18,7 @@ extensions = ["mp3", "wav", "ogg", "flac"]  # we will look for all those file ty
 
 
 def check_file_availability(url):
-    exit_status = os.system(f"wget --spider {url}")
+    exit_status = os.system(f"wget -o --spider {url}")
     return exit_status == 0
 
 
@@ -33,18 +31,6 @@ def url_is_valid(url):
         st.error("Extension not supported.")
         return False
     try:
-        r = requests.get(url)
-        r.raise_for_status()
-        return True
-    except requests.exceptions.HTTPError as err:
-        msg = (
-            "requests get failed with status code "
-            + str(err.response.status_code)
-            + " for url "
-            + url
-            + ". Try wget spider."
-        )
-        logging.error(msg)
         return check_file_availability(url)
     except Exception:
         st.error("URL is not valid.")
@@ -79,12 +65,19 @@ def plot_audio(_audio_segment: AudioSegment, *args, **kwargs) -> Image.Image:
 
 
 @st.cache_data(show_spinner=False)
-def load_list_of_songs():
-    return json.load(open("sample_songs.json"))
+def load_list_of_songs(path="sample_songs.json"):
+    if os.environ.get("PREPARE_SAMPLES"):
+        return json.load(open(path))
+    else:
+        st.error(
+            "No examples available. You need to set the environment variable `PREPARE_SAMPLES=true`"
+        )
 
 
 def get_random_song():
     sample_songs = load_list_of_songs()
+    if sample_songs is None:
+        return None, None
     name, url = random.choice(list(sample_songs.items()))
     return name, url
 

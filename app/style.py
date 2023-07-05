@@ -124,6 +124,12 @@ CSS = (
         gap: 0rem;
     }
 
+    /* center the audio player in Separate page */
+    .css-keje6w.e1tzin5v1 {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
 
 </style>
 

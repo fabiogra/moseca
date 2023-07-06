@@ -16,7 +16,7 @@ def main():
     p.add_argument("--pretrained_model", "-P", type=str, default="baseline.pth")
     p.add_argument("--input", "-i", required=True)
     p.add_argument("--output_dir", "-o", type=str, default="")
-    p.add_argument("--only_no_vocals", "-n", action="store_true")
+    p.add_argument("--only_no_vocals", "-n", default=True)
     args = p.parse_args()
 
     input_file = args.input

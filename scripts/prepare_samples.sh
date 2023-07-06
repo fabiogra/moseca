@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# Read the secret into a variable
+export PREPARE_SAMPLES=$(cat /run/secrets/PREPARE_SAMPLES)
+
 # Check if the "PREPARE_SAMPLES" environment variable is set
 if [ -z "${PREPARE_SAMPLES}" ]; then
     echo "PREPARE_SAMPLES is unset or set to the empty string. Skipping sample preparation."

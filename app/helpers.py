@@ -43,13 +43,16 @@ def load_audio_segment(path: str, format: str) -> AudioSegment:
 
 
 @st.cache_data(show_spinner=False)
-def plot_audio(_audio_segment: AudioSegment, *args, **kwargs) -> Image.Image:
+def plot_audio(_audio_segment: AudioSegment, max_y: float, *args, **kwargs) -> Image.Image:
     samples = _audio_segment.get_array_of_samples()
     arr = np.array(samples)
 
     fig, ax = plt.subplots(figsize=(10, 2))
-    ax.plot(arr, linewidth=0.05)
+    ax.plot(arr, linewidth=0.04)
     ax.set_axis_off()
+
+    # Scale the plot based on max Y value
+    ax.set_ylim(bottom=-max_y, top=max_y)
 
     # Set the background color to transparent
     fig.patch.set_alpha(0)

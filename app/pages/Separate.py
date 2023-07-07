@@ -72,7 +72,7 @@ def show_results(model_name: str, dir_name_output: str, file_sources: List):
                 st.image(
                     plot_audio(
                         auseg,
-                        title="",
+                        32767,
                         file=file,
                         model_name=model_name,
                         dir_name_output=dir_name_output,

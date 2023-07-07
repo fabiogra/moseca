@@ -140,7 +140,11 @@ def body():
                 help="Supported formats: mp3, wav, ogg, flac.",
             )
             if uploaded_file is not None:
-                st.audio(uploaded_file)
+                with st.spinner("Loading audio..."):
+                    with open(in_path / uploaded_file.name, "wb") as f:
+                        f.write(uploaded_file.getbuffer())
+                    filename = uploaded_file.name
+                    st.audio(uploaded_file)
 
         elif option == "From URL":
             url = st.text_input(
@@ -152,7 +156,7 @@ def body():
                 with st.spinner("Downloading audio..."):
                     filename = url.split("/")[-1]
                     os.system(f"wget -q -O {in_path / filename} {url}")
-                st_local_audio(in_path / filename, key="input_from_url")
+                    st_local_audio(in_path / filename, key="input_from_url")
         elif option == "Examples":
             samples_song = load_list_of_songs(path="separate_songs.json")
             if samples_song is not None:
@@ -214,13 +218,14 @@ def body():
             execute = st.button(
                 "Separate Music Sources 🎶", type="primary", use_container_width=True
             )
-            if execute or st.session_state.executed:
-                if execute:
-                    st.session_state.executed = False
+        if execute or st.session_state.executed:
+            if execute:
+                st.session_state.executed = False
 
-                if not st.session_state.executed:
-                    log.info(f"{option} - Separating {filename} with {separation_mode}...")
-                    song.export(in_path / filename, format=filename.split(".")[-1])
+            if not st.session_state.executed:
+                log.info(f"{option} - Separating {filename} with {separation_mode}...")
+                song.export(in_path / filename, format=filename.split(".")[-1])
+                with st.columns([1, 1, 1])[1]:
                     with st.spinner("Separating source audio, it will take a while..."):
                         if model_name == "vocal_remover":
                             model, device = load_model(pretrained_model="baseline.pth")
@@ -251,10 +256,10 @@ def body():
                                 start_time=start_time,
                                 end_time=end_time,
                             )
-                dir_name_output = ".".join(filename.split(".")[:-1])
-                filename = None
-                st.session_state.executed = True
-                show_results(model_name, dir_name_output, file_sources)
+            dir_name_output = ".".join(filename.split(".")[:-1])
+            filename = None
+            st.session_state.executed = True
+            show_results(model_name, dir_name_output, file_sources)
     elif name_song is not None and option == "Examples":
         show_results(model_name, name_song, file_sources)
 

@@ -81,7 +81,7 @@ def show_results(model_name: str, dir_name_output: str, file_sources: List):
                 )
             with cols[1]:
                 st_local_audio(pathname, key=f"output_{file}_{dir_name_output}")
-    log.info(f"Displaying results for {dir_name_output}")
+    log.info(f"Displaying results for {dir_name_output} - {model_name}")
 
 
 def body():
@@ -140,10 +140,7 @@ def body():
                 help="Supported formats: mp3, wav, ogg, flac.",
             )
             if uploaded_file is not None:
-                with open(in_path / uploaded_file.name, "wb") as f:
-                    f.write(uploaded_file.getbuffer())
-                filename = uploaded_file.name
-                st_local_audio(in_path / filename, key="input_upload_file")
+                st.audio(uploaded_file)
 
         elif option == "From URL":
             url = st.text_input(

@@ -19,6 +19,7 @@ from helpers import (
 from service.vocal_remover.runner import separate, load_model
 from footer import footer
 from header import header
+from loguru import logger as log
 
 
 out_path = Path("/tmp")
@@ -64,8 +65,9 @@ def show_karaoke(pathname):
     with st.columns([1, 4, 1])[1]:
         if events.name == "onPlay":
             st.session_state.player_restart = True
+            log.info(f"Play Karaoke - {sess.selected_value}")
 
-        elif events.name == "onProgress":
+        elif events.name == "onProgress" and events.data["playedSeconds"] > 0:
             if st.session_state.player_restart:
                 sess.tot_delay = sess.delay + events.data["playedSeconds"]
                 st.session_state.player_restart = False
@@ -108,6 +110,7 @@ def body():
     with yt_cols[2]:
         if st.button("🎲 Random song", use_container_width=True):
             sess.last_dir, sess.url = get_random_song()
+            sess.selected_value = sess.last_dir
             sess.random_song = True
             sess.video_options = []
             sess.executed = False

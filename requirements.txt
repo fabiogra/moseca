@@ -83,8 +83,6 @@ jsonschema-specifications==2023.6.1
     # via jsonschema
 julius==0.2.7
     # via demucs
-kaleido==0.2.1
-    # via -r requirements.in
 kiwisolver==1.4.4
     # via matplotlib
 lameenc==1.5.1
@@ -154,8 +152,6 @@ pillow==10.0.0
     # via
     #   matplotlib
     #   streamlit
-plotly==5.13.0
-    # via -r requirements.in
 pooch==1.6.0
     # via librosa
 protobuf==3.20.3
@@ -243,9 +239,7 @@ submitit==1.4.5
 sympy==1.12
     # via torch
 tenacity==8.2.2
-    # via
-    #   plotly
-    #   streamlit
+    # via streamlit
 threadpoolctl==3.1.0
     # via scikit-learn
 toml==0.10.2
@@ -287,7 +281,7 @@ validators==0.20.0
     # via streamlit
 websockets==11.0.3
     # via yt-dlp
-yt-dlp==2023.3.4
+yt-dlp==2023.7.6
     # via -r requirements.in
 zipp==3.16.0
     # via importlib-metadata

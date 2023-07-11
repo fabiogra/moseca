@@ -63,6 +63,8 @@ def search_youtube(query: str) -> List:
         st.session_state.search_results = search.results
         if "search_results" in st.session_state and st.session_state.search_results is not None:
             video_options = [video.title for video in st.session_state.search_results]
+        else:
+            video_options = []
     else:
         video_options = []
     st.session_state.video_options = video_options

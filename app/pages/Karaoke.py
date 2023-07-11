@@ -32,7 +32,7 @@ def show_karaoke(pathname):
     cols = st.columns([1, 1, 3, 1])
     with cols[1]:
         sess.delay = st.slider(
-            label="Start delay in karaoke (seconds)",
+            label="Adjust video start delay in seconds (higher values anticipate lyrics)",
             key="delay_slider",
             value=2,
             min_value=0,

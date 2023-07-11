@@ -149,7 +149,7 @@ def body():
                         cols_spinners = st.columns([1, 2, 1])
                         with cols_spinners[1]:
                             with st.spinner(
-                                "Separating vocals from music, it will take a while..."
+                                "Separating vocals from music, it could take a few minutes... Don't close this page!"
                             ):
                                 sess.filename = download_audio_from_youtube(sess.url, in_path)
                                 if sess.filename is None:

@@ -61,7 +61,7 @@ def search_youtube(query: str) -> List:
         time.sleep(0.5)
         search = query_youtube(query + " lyrics")
         st.session_state.search_results = search.results
-        if st.session_state.search_results is not None:
+        if "search_results" in st.session_state and st.session_state.search_results is not None:
             video_options = [video.title for video in st.session_state.search_results]
     else:
         video_options = []

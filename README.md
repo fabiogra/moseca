@@ -76,7 +76,8 @@ You can set the following environment variables to limit the resources used by t
 - ENV_LIMITATION=true
 - LIMIT_CPU=true
 
-If you want to use a prepare the samples used in the demo, you need to set the env variable `PREPARE_SAMPLES=true`
+If you want to preprocess the samples used in the demo, you need to set the env variable `PREPARE_SAMPLES=true`
+
 ---
 ## About
 

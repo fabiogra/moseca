@@ -30,4 +30,4 @@ EXPOSE 7860
 HEALTHCHECK CMD curl --fail http://localhost:7860/_stcore/health
 RUN --mount=type=secret,id=PREPARE_SAMPLES,mode=0444 ./prepare_samples.sh
 
-ENTRYPOINT ["streamlit", "run", "app/header.py", "--server.port=7860", "--server.address=0.0.0.0"]
+ENTRYPOINT ["streamlit", "run", "app/header.py", "--server.port=7860", "--server.address=0.0.0.0", "--server.enableCORS=false", "--server.enableXsrfProtection=false"]

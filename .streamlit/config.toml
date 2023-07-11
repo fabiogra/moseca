@@ -1,3 +1,4 @@
 [server]
-enableXsrfProtection = true
+enableXsrfProtection = false
 enableCORS = true
+enableWebsocketCompression = false

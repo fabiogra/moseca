@@ -102,7 +102,7 @@ def body():
         unsafe_allow_html=True,
     )
 
-    cols = st.columns([1, 3, 2, 1])
+    cols = st.columns([1, 6, 1, 4, 1])
     with cols[1]:
         with st.columns([1, 8, 1])[1]:
             option = option_menu(
@@ -172,7 +172,7 @@ def body():
                 else:
                     name_song = None
 
-    with cols[2]:
+    with cols[3]:
         separation_mode = st.selectbox(
             "Choose the separation mode",
             [
@@ -194,7 +194,7 @@ def body():
         song = load_audio_segment(in_path / filename, filename.split(".")[-1])
         n_secs = round(len(song) / 1000)
         if os.environ.get("ENV_LIMITATION", False):
-            with cols[2]:
+            with cols[3]:
                 start_time = st.number_input(
                     "Choose the start time",
                     min_value=0,

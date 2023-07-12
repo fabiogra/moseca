@@ -4,14 +4,13 @@ import random
 from base64 import b64encode
 from io import BytesIO
 from pathlib import Path
+from loguru import logger as log
 
 import matplotlib.pyplot as plt
 import numpy as np
 import streamlit as st
-from loguru import logger as log
 from PIL import Image
 from pydub import AudioSegment
-
 from streamlit.runtime.scriptrunner import RerunData, RerunException
 from streamlit.source_util import get_pages
 from streamlit_player import st_player
@@ -33,7 +32,11 @@ def url_is_valid(url):
         st.error("Extension not supported.")
         return False
     try:
-        return check_file_availability(url)
+        if check_file_availability(url):
+            return True
+        else:
+            st.error("Not able to reach the URL.")
+            return False
     except Exception:
         st.error("URL is not valid.")
         return False

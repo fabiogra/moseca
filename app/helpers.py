@@ -28,18 +28,10 @@ def url_is_valid(url):
     if url.startswith("http") is False:
         st.error("URL should start with http or https.")
         return False
-    elif url.split(".")[-1] not in extensions:
+    if url.split(".")[-1] not in extensions:
         st.error("Extension not supported.")
         return False
-    try:
-        if check_file_availability(url):
-            return True
-        else:
-            st.error("Not able to reach the URL.")
-            return False
-    except Exception:
-        st.error("URL is not valid.")
-        return False
+    return True
 
 
 @st.cache_data(show_spinner=False)

@@ -3,7 +3,9 @@ from pathlib import Path
 from typing import List
 from loguru import logger as log
 
+import requests
 import streamlit as st
+
 from footer import footer
 from header import header
 from helpers import (
@@ -152,11 +154,22 @@ def body():
                 key="url_input",
                 help="Supported formats: mp3, wav, ogg, flac.",
             )
+
             if url != "" and url_is_valid(url):
                 with st.spinner("Downloading audio..."):
                     filename = url.split("/")[-1]
-                    os.system(f"wget -q -O {in_path / filename} {url}")
-                    st_local_audio(in_path / filename, key="input_from_url")
+                    response = requests.get(url, stream=True)
+
+                    if response.status_code == 200:
+                        with open(in_path / filename, "wb") as audio_file:
+                            for chunk in response.iter_content(chunk_size=1024):
+                                if chunk:
+                                    audio_file.write(chunk)
+
+                        st_local_audio(in_path / filename, key="input_from_url")
+                    else:
+                        st.error("Failed to download audio file.")
+
         elif option == "Examples":
             samples_song = load_list_of_songs(path="separate_songs.json")
             if samples_song is not None:

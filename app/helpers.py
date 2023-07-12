@@ -8,8 +8,10 @@ from pathlib import Path
 import matplotlib.pyplot as plt
 import numpy as np
 import streamlit as st
+from loguru import logger as log
 from PIL import Image
 from pydub import AudioSegment
+
 from streamlit.runtime.scriptrunner import RerunData, RerunException
 from streamlit.source_util import get_pages
 from streamlit_player import st_player
@@ -39,7 +41,12 @@ def url_is_valid(url):
 
 @st.cache_data(show_spinner=False)
 def load_audio_segment(path: str, format: str) -> AudioSegment:
-    return AudioSegment.from_file(path, format=format)
+    try:
+        return AudioSegment.from_file(path, format=format)
+    except Exception as e:
+        st.error("Audio file is not valid.")
+        log.warning(e)
+        st.stop()
 
 
 @st.cache_data(show_spinner=False)

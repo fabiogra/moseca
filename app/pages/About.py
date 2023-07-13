@@ -2,6 +2,7 @@ import streamlit as st
 
 from header import header
 from footer import footer
+from helpers import delete_old_files
 
 
 def body():
@@ -152,3 +153,4 @@ if __name__ == "__main__":
     header(logo_and_title=False)
     body()
     footer()
+    delete_old_files("/tmp", 60 * 30)

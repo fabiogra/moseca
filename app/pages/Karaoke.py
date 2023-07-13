@@ -14,6 +14,7 @@ from helpers import (
     load_audio_segment,
     streamlit_player,
     local_audio,
+    delete_old_files,
 )
 
 from service.vocal_remover.runner import separate, load_model
@@ -182,3 +183,4 @@ if __name__ == "__main__":
     header()
     body()
     footer()
+    delete_old_files("/tmp", 60 * 30)

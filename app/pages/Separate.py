@@ -15,6 +15,7 @@ from helpers import (
     st_local_audio,
     url_is_valid,
     file_size_is_valid,
+    delete_old_files,
 )
 from service.demucs_runner import separator
 from service.vocal_remover.runner import load_model, separate
@@ -281,3 +282,4 @@ if __name__ == "__main__":
     header()
     body()
     footer()
+    delete_old_files("/tmp", 60 * 30)

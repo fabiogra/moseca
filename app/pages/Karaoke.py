@@ -89,13 +89,16 @@ def show_karaoke(pathname):
 
 
 def body():
-    st.markdown("<center>Search for a song on YouTube<center>", unsafe_allow_html=True)
+    st.markdown(
+        "<h4><center>Play karaoke removing the vocals of your favorite song <center></h4>",
+        unsafe_allow_html=True,
+    )
     yt_cols = st.columns([1, 3, 2, 1])
     with yt_cols[1]:
         selected_value = st_searchbox(
             search_youtube,
             label=None,
-            placeholder="Search by name...",
+            placeholder="Search on YouTube by name...",
             clear_on_submit=True,
             key="yt_searchbox",
         )

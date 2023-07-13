@@ -104,6 +104,12 @@ CSS = (
         text-align: center;
     }
 
+    #extract-vocals-instrumental-from-any-song, #play-karaoke-removing-the-vocals-of-your-favorite-song {
+        font-family: """
+    + _font_subtitle
+    + """, sans-serif;
+    }
+
     /* Desktop */
     @media (min-width: 640px) {
         .css-zt5igj, .css-nahz7x p {
@@ -130,8 +136,20 @@ CSS = (
         justify-content: center;
         align-items: center;
     }
-
 </style>
 
 """
 )
+
+
+CSS_TABS = """<style>
+        div[data-baseweb="tab-list"] {
+            display: flex !important;
+            align-items: center !important;
+            justify-content: space-evenly !important;
+            flex-wrap: wrap !important;
+                .css-q8sbsg.e16nr0p34 p{
+                    font-size: 1.1rem !important;
+                }
+        }
+        </style>"""

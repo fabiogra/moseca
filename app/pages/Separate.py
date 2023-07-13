@@ -5,6 +5,7 @@ from loguru import logger as log
 
 import requests
 import streamlit as st
+from streamlit_option_menu import option_menu
 
 from footer import footer
 from header import header
@@ -19,7 +20,7 @@ from helpers import (
 )
 from service.demucs_runner import separator
 from service.vocal_remover.runner import load_model, separate
-from streamlit_option_menu import option_menu
+from style import CSS_TABS
 
 
 label_sources = {
@@ -92,21 +93,13 @@ def body():
     filename = None
     name_song = None
     st.markdown(
-        """<style>
-        div[data-baseweb="tab-list"] {
-            display: flex !important;
-            align-items: center !important;
-            justify-content: space-evenly !important;
-            flex-wrap: wrap !important;
-                .css-q8sbsg.e16nr0p34 p{
-                    font-size: 1.1rem !important;
-                }
-        }
-        </style>""",
+        "<h4><center>Extract Vocals & Instrumental from any song</center></h4>",
         unsafe_allow_html=True,
     )
+    st.markdown(CSS_TABS, unsafe_allow_html=True)
 
-    cols = st.columns([1, 6, 1, 4, 1])
+    cols = st.columns([1, 4, 1, 3, 1])
+
     with cols[1]:
         with st.columns([1, 8, 1])[1]:
             option = option_menu(
@@ -140,13 +133,13 @@ def body():
             samples_song = load_list_of_songs(path="separate_songs.json")
             if samples_song is not None:
                 name_song = st.selectbox(
-                    label="Select a song",
-                    options=list(samples_song.keys()),
+                    label="Select a sample song and listen to sources separated",
+                    options=list(samples_song.keys()) + [""],
                     format_func=lambda x: x.replace("_", " "),
-                    index=1,
+                    index=len(samples_song),
                     key="select_example",
                 )
-                if (Path("/tmp") / name_song).exists():
+                if name_song != "" and (Path("/tmp") / name_song).exists():
                     st_local_audio(Path("/tmp") / name_song, key=f"input_from_sample_{name_song}")
                 else:
                     name_song = None

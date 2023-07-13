@@ -161,14 +161,25 @@ def body():
                 with st.spinner("Downloading audio..."):
                     filename = url.split("/")[-1]
                     response = requests.get(url, stream=True)
-                    if response.status_code == 200 and file_size_is_valid(response):
+                    if response.status_code == 200 and file_size_is_valid(
+                        response.headers.get("Content-Length")
+                    ):
+                        file_size = 0
                         with open(in_path / filename, "wb") as audio_file:
                             for chunk in response.iter_content(chunk_size=1024):
                                 if chunk:
                                     audio_file.write(chunk)
+                                    file_size += len(chunk)
+                                    if not file_size_is_valid(file_size):
+                                        audio_file.close()
+                                        os.remove(in_path / filename)
+                                        filename = None
+                                        return
                         st_local_audio(in_path / filename, key="input_from_url")
                     else:
-                        st.error("Failed to download audio file.")
+                        st.error(
+                            "Failed to download audio file. Try to download it manually and upload it."
+                        )
                         filename = None
 
         elif option == "Examples":
@@ -215,14 +226,14 @@ def body():
                     max_value=n_secs,
                     step=1,
                     value=0,
-                    help=f"Maximum duration is {max_duration} seconds for this separation mode. Duplicate this space to remove any limit.",
+                    help=f"Maximum duration is {max_duration} seconds for this separation mode.\nDuplicate this space to [remove any limit](https://github.com/fabiogra/moseca#are-there-any-limitations).",
                     format="%d",
                 )
                 st.session_state.start_time = start_time
                 end_time = min(start_time + max_duration, n_secs)
                 song = song[start_time * 1000 : end_time * 1000]
                 st.info(
-                    f"Audio source will be processed from {start_time} to {end_time} seconds. Duplicate this space to remove any limit.",
+                    f"Audio source will be processed from {start_time} to {end_time} seconds.\nDuplicate this space to [remove any limit](https://github.com/fabiogra/moseca#are-there-any-limitations).",
                     icon="⏱",
                 )
         else:

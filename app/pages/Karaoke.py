@@ -147,31 +147,27 @@ def body():
                     sess.executed = False
                 if sess.random_song is None:
                     if not sess.executed:
-                        cols_spinners = st.columns([1, 2, 1])
-                        with cols_spinners[1]:
-                            with st.spinner(
-                                "Separating vocals from music, it could take a few minutes... Don't close this page!"
-                            ):
-                                sess.filename = download_audio_from_youtube(sess.url, in_path)
-                                if sess.filename is None:
-                                    st.stop()
-                                sess.url = None
-                                filename = sess.filename
-                                song = load_audio_segment(
-                                    in_path / filename, filename.split(".")[-1]
-                                )
-                                song.export(in_path / filename, format=filename.split(".")[-1])
-                                model, device = load_model(pretrained_model="baseline.pth")
-                                separate(
-                                    input=in_path / filename,
-                                    model=model,
-                                    device=device,
-                                    output_dir=out_path,
-                                    only_no_vocals=True,
-                                )
-                                selected_value = None
-                                sess.last_dir = ".".join(sess.filename.split(".")[:-1])
-                                sess.executed = True
+                        with st.spinner(
+                            "Separating vocals from music, it could take a few minutes... Don't close this page!"
+                        ):
+                            sess.filename = download_audio_from_youtube(sess.url, in_path)
+                            if sess.filename is None:
+                                st.stop()
+                            sess.url = None
+                            filename = sess.filename
+                            song = load_audio_segment(in_path / filename, filename.split(".")[-1])
+                            song.export(in_path / filename, format=filename.split(".")[-1])
+                            model, device = load_model(pretrained_model="baseline.pth")
+                            separate(
+                                input=in_path / filename,
+                                model=model,
+                                device=device,
+                                output_dir=out_path,
+                                only_no_vocals=True,
+                            )
+                            selected_value = None
+                            sess.last_dir = ".".join(sess.filename.split(".")[:-1])
+                            sess.executed = True
                 else:
                     sess.executed = True
 

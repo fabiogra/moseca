@@ -31,8 +31,7 @@ def header(logo_and_title=True):
     if "search_results" not in st.session_state:
         st.session_state.search_results = []
     if "page" not in st.session_state:
-        st.session_state.page = "Separate"
-        switch_page(st.session_state.page)
+        switch_page("Separate")
 
     st.set_page_config(
         page_title="Moseca - Music Separation and Karaoke - Free and Open Source alternative to lalal.ai, splitter.ai or media.io vocal remover.",

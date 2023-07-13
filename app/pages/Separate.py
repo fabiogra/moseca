@@ -14,6 +14,7 @@ from helpers import (
     plot_audio,
     st_local_audio,
     url_is_valid,
+    file_size_is_valid,
 )
 from service.demucs_runner import separator
 from service.vocal_remover.runner import load_model, separate
@@ -159,16 +160,15 @@ def body():
                 with st.spinner("Downloading audio..."):
                     filename = url.split("/")[-1]
                     response = requests.get(url, stream=True)
-
-                    if response.status_code == 200:
+                    if response.status_code == 200 and file_size_is_valid(response):
                         with open(in_path / filename, "wb") as audio_file:
                             for chunk in response.iter_content(chunk_size=1024):
                                 if chunk:
                                     audio_file.write(chunk)
-
                         st_local_audio(in_path / filename, key="input_from_url")
                     else:
                         st.error("Failed to download audio file.")
+                        filename = None
 
         elif option == "Examples":
             samples_song = load_list_of_songs(path="separate_songs.json")

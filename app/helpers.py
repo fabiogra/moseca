@@ -163,3 +163,13 @@ def st_local_audio(pathname, key):
         },
         key=key,
     )
+
+
+def file_size_is_valid(response):
+    file_size = response.headers.get("Content-Length")
+    file_size = int(file_size)
+    max_size_mb = int(os.environ["STREAMLIT_SERVER_MAX_UPLOAD_SIZE"])
+    if max_size_mb and file_size > max_size_mb * 1024 * 1024:
+        st.error(
+            f"The file is too large to download. Maximum size allowed: {max_size_mb}MB. Duplicate this space to remove any limit."
+        )

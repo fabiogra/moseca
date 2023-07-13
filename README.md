@@ -16,8 +16,7 @@ pinned: true
 <h2 align="center">Moseca</h1>
 <p align="center">Music Source Separation & Karaoke</p>
 
-
-</a>
+[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/1ODoK3VXajprNbskqy7G8P1h-Zom92TMA?usp=sharing)
 <a href="https://huggingface.co/spaces/fabiogra/moseca">
 <img src="https://img.shields.io/badge/🤗%20Hugging%20Face-Spaces-blue"
 alt="Hugging Face Spaces"></a>
@@ -148,6 +147,8 @@ With Moseca, you can deploy your personal Moseca app in the
 alt="Hugging Face Spaces"></a> or locally with
 [![Docker Call](https://img.shields.io/badge/-Docker%20Image-blue?logo=docker&labelColor=white)](https://huggingface.co/spaces/fabiogra/moseca/discussions?docker=true)
 in just one click.
+
+You can also speed up the music separation process by [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/1ODoK3VXajprNbskqy7G8P1h-Zom92TMA?usp=sharing) with GPU support.
 
 <br>
 

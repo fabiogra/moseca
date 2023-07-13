@@ -111,7 +111,7 @@ def body():
         with st.columns([1, 8, 1])[1]:
             option = option_menu(
                 menu_title=None,
-                options=["Upload File", "From URL", "Examples"],
+                options=["Examples", "Upload File", "From URL"],
                 icons=["cloud-upload-fill", "link-45deg", "music-note-list"],
                 orientation="horizontal",
                 styles={
@@ -136,7 +136,22 @@ def body():
                 },
                 key="option_separate",
             )
-        if option == "Upload File":
+        if option == "Examples":
+            samples_song = load_list_of_songs(path="separate_songs.json")
+            if samples_song is not None:
+                name_song = st.selectbox(
+                    label="Select a song",
+                    options=list(samples_song.keys()),
+                    format_func=lambda x: x.replace("_", " "),
+                    index=1,
+                    key="select_example",
+                )
+                if (Path("/tmp") / name_song).exists():
+                    st_local_audio(Path("/tmp") / name_song, key=f"input_from_sample_{name_song}")
+                else:
+                    name_song = None
+
+        elif option == "Upload File":
             uploaded_file = st.file_uploader(
                 "Choose a file",
                 type=extensions,
@@ -181,21 +196,6 @@ def body():
                             "Failed to download audio file. Try to download it manually and upload it."
                         )
                         filename = None
-
-        elif option == "Examples":
-            samples_song = load_list_of_songs(path="separate_songs.json")
-            if samples_song is not None:
-                name_song = st.selectbox(
-                    label="Select a song",
-                    options=list(samples_song.keys()),
-                    format_func=lambda x: x.replace("_", " "),
-                    index=1,
-                    key="select_example",
-                )
-                if (Path("/tmp") / name_song).exists():
-                    st_local_audio(Path("/tmp") / name_song, key=f"input_from_sample_{name_song}")
-                else:
-                    name_song = None
 
     with cols[3]:
         separation_mode = st.selectbox(

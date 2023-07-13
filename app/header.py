@@ -31,7 +31,7 @@ def header(logo_and_title=True):
     if "search_results" not in st.session_state:
         st.session_state.search_results = []
     if "page" not in st.session_state:
-        st.session_state.page = "Karaoke"
+        st.session_state.page = "Separate"
         switch_page(st.session_state.page)
 
     st.set_page_config(
@@ -42,7 +42,7 @@ def header(logo_and_title=True):
     )
     st.markdown(CSS, unsafe_allow_html=True)
 
-    options = ["Karaoke", "Separate", "About"]
+    options = ["Separate", "Karaoke", "About"]
     page = option_menu(
         menu_title=None,
         options=options,

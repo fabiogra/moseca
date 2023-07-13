@@ -52,9 +52,13 @@ alt="Buy me a coffee"></a>
 
 ## Setup
 ### Local environment
-Create a new environment with Python 3.8 and install the requirements:
+Create a new environment with Python 3.10 and install the requirements:
 ```bash
 pip install -r requirements.txt
+```
+set the `PYTHONPATH` to the root folder:
+```bash
+export PYTHONPATH=path/to/moseca
 ```
 then run the app with:
 ```bash
@@ -76,7 +80,15 @@ You can set the following environment variables to limit the resources used by t
 - ENV_LIMITATION=true
 - LIMIT_CPU=true
 
-If you want to preprocess the samples used in the demo, you need to set the env variable `PREPARE_SAMPLES=true`
+### (Optional) Preprocess samples
+If you want to preprocess the samples used in the demo, you need to set the env variable `PREPARE_SAMPLES=true` as a secret (create the file `run/secrets/PREPARE_SAMPLES` with `true` value inside).
+
+If you run locally you also need to move the files inside `scripts` to the root folder and run `prepare_samples.sh`.
+```
+cp scripts/ .
+chmod +x prepare_samples.sh
+python prepare_samples.sh
+```
 
 ---
 ## About

@@ -140,7 +140,7 @@ def body():
                     key="select_example",
                 )
                 full_path = f"{in_path}/{name_song}"
-                if name_song != "" and (full_path).exists():
+                if name_song != "" and Path(full_path).exists():
                     st.audio(full_path)
                 else:
                     name_song = None

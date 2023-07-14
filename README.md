@@ -28,7 +28,9 @@ alt="Docker"></a><a href="https://www.buymeacoffee.com/fabiogra">
 alt="Buy me a coffee"></a>
 
 ---
-<video src="https://i.imgur.com/N1Ol78S.mp4" alt="Moseca Video Demo" width="100%" controls autoplay></video>
+<p align="center">
+  <img src="https://i.imgur.com/QoSd3Fg.gif" alt="Demo Moseca"/>
+</p>
 
 
 - [Setup](#setup)

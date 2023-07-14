@@ -139,8 +139,9 @@ def body():
                     index=len(samples_song),
                     key="select_example",
                 )
-                if name_song != "" and (Path("/tmp") / name_song).exists():
-                    st_local_audio(Path("/tmp") / name_song, key=f"input_from_sample_{name_song}")
+                full_path = f"{in_path}/{name_song}"
+                if name_song != "" and (full_path).exists():
+                    st.audio(full_path)
                 else:
                     name_song = None
 
@@ -183,7 +184,7 @@ def body():
                                         os.remove(in_path / filename)
                                         filename = None
                                         return
-                        st_local_audio(in_path / filename, key="input_from_url")
+                        st.audio(f"{in_path}/{filename}")
                     else:
                         st.error(
                             "Failed to download audio file. Try to download it manually and upload it."

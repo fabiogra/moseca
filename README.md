@@ -28,8 +28,13 @@ alt="Docker"></a><a href="https://www.buymeacoffee.com/fabiogra">
 alt="Buy me a coffee"></a>
 
 ---
+<video src="https://i.imgur.com/N1Ol78S.mp4" alt="Moseca Video Demo" width="100%" controls autoplay></video>
+
 
 - [Setup](#setup)
+  - [Local environment](#local-environment)
+  - [Docker](#docker)
+  - [(Optional) Preprocess samples](#optional-preprocess-samples)
 - [About](#about)
   - [High-Quality Stem Separation](#high-quality-stem-separation)
   - [Advanced AI Algorithms](#advanced-ai-algorithms)
@@ -46,7 +51,6 @@ alt="Buy me a coffee"></a>
   - [How can I get in touch with you?](#how-can-i-get-in-touch-with-you)
 - [Disclaimer](#disclaimer)
 
-
 ---
 
 
@@ -59,6 +63,10 @@ pip install -r requirements.txt
 set the `PYTHONPATH` to the root folder:
 ```bash
 export PYTHONPATH=path/to/moseca
+```
+download the vocal remover model:
+```bash
+wget --progress=bar:force:noscroll https://huggingface.co/fabiogra/baseline_vocal_remover/resolve/main/baseline.pth
 ```
 then run the app with:
 ```bash

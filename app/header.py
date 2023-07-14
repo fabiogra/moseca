@@ -11,6 +11,8 @@ logging.basicConfig(
     datefmt="%Y-%m-%d %H:%M:%S",
 )
 
+DEFAULT_PAGE = "Separate"
+
 
 def header(logo_and_title=True):
     if "first_run" not in st.session_state:
@@ -31,7 +33,7 @@ def header(logo_and_title=True):
     if "search_results" not in st.session_state:
         st.session_state.search_results = []
     if "page" not in st.session_state:
-        switch_page("Separate")
+        switch_page(DEFAULT_PAGE)
 
     st.set_page_config(
         page_title="Moseca - Music Separation and Karaoke - Free and Open Source alternative to lalal.ai, splitter.ai or media.io vocal remover.",
@@ -42,17 +44,18 @@ def header(logo_and_title=True):
     st.markdown(CSS, unsafe_allow_html=True)
 
     options = ["Separate", "Karaoke", "About"]
+
     page = option_menu(
         menu_title=None,
         options=options,
         # bootrap icons
         icons=["play-btn-fill", "file-earmark-music", "info-circle"],
-        default_index=options.index(st.session_state.page),
+        default_index=options.index(st.session_state.get("page", DEFAULT_PAGE)),
         orientation="horizontal",
         styles={"nav-link": {"padding-left": "1.5rem", "padding-right": "1.5rem"}},
         key="",
     )
-    if page != st.session_state.page:
+    if page != st.session_state.get("page", DEFAULT_PAGE):
         switch_page(page)
 
     if logo_and_title:

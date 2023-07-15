@@ -2,7 +2,6 @@ import logging
 import os
 import re
 import string
-import time
 from typing import List
 
 import streamlit as st
@@ -51,18 +50,17 @@ def download_audio_from_youtube(url, output_path):
     return f"{video_title}.mp3"
 
 
-@st.cache_data(show_spinner=False)
+@st.cache_data(show_spinner=False, max_entries=10)
 def query_youtube(query: str) -> Search:
     return Search(query)
 
 
-def search_youtube(query: str) -> List:
+def search_youtube(query: str, limit=5) -> List:
     if len(query) > 3:
-        time.sleep(0.5)
         search = query_youtube(query + " lyrics")
         st.session_state.search_results = search.results
         if "search_results" in st.session_state and st.session_state.search_results is not None:
-            video_options = [video.title for video in st.session_state.search_results]
+            video_options = [video.title for video in st.session_state.search_results[:limit]]
         else:
             video_options = []
     else:

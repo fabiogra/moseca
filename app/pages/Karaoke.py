@@ -33,7 +33,7 @@ def show_karaoke(pathname):
     cols = st.columns([1, 1, 3, 1])
     with cols[1]:
         sess.delay = st.slider(
-            label="Adjust video start delay in seconds (higher values anticipate lyrics)",
+            label="Adjust video start delay in seconds (higher values anticipate lyrics, need to restart the player)",
             key="delay_slider",
             value=2,
             min_value=0,
@@ -60,7 +60,7 @@ def show_karaoke(pathname):
             key="karaoke_player",
         )
     st.markdown(
-        "<center>⬆️ Click on the play button to start karaoke<center>",
+        """<center>⬆️ Click on the play button to start karaoke<br>You will see the video with lyrics below ⬇️<center>""",
         unsafe_allow_html=True,
     )
     with st.columns([1, 4, 1])[1]:
@@ -113,8 +113,8 @@ def body():
             key="yt_input_search",
             on_change=reset_karaoke,
         )
+        radio_selection = st.empty()
         if not sess.get("karaoke", False):
-            radio_selection = st.empty()
             if input_search != "" and input_search != sess.get("input_search", ""):
                 sess.input_search = input_search
                 with st.spinner("Searching on YouTube..."):

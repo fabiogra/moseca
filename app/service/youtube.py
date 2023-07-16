@@ -2,9 +2,9 @@ import logging
 import os
 import re
 import string
-import time
 from typing import List
 
+from loguru import logger as log
 import streamlit as st
 import yt_dlp
 from pytube import Search
@@ -27,7 +27,7 @@ def download_audio_from_youtube(url, output_path):
     if not os.path.exists(output_path):
         os.makedirs(output_path)
 
-    with yt_dlp.YoutubeDL() as ydl:
+    with yt_dlp.YoutubeDL({"quiet": True}) as ydl:
         info_dict = ydl.extract_info(url, download=False)
     if info_dict.get("duration", 0) > 360:
         st.error("Song is too long. Please use a song no longer than 6 minutes.")
@@ -44,25 +44,25 @@ def download_audio_from_youtube(url, output_path):
             }
         ],
         "outtmpl": os.path.join(output_path, video_title),
-        #'quiet': True,
+        "quiet": True,
     }
     with yt_dlp.YoutubeDL(ydl_opts) as ydl:
         ydl.download([url])
     return f"{video_title}.mp3"
 
 
-@st.cache_data(show_spinner=False)
+@st.cache_data(show_spinner=False, max_entries=10)
 def query_youtube(query: str) -> Search:
     return Search(query)
 
 
-def search_youtube(query: str) -> List:
+def search_youtube(query: str, limit=5) -> List:
+    log.info(f"{query}")
     if len(query) > 3:
-        time.sleep(0.5)
         search = query_youtube(query + " lyrics")
         st.session_state.search_results = search.results
         if "search_results" in st.session_state and st.session_state.search_results is not None:
-            video_options = [video.title for video in st.session_state.search_results]
+            video_options = [video.title for video in st.session_state.search_results[:limit]]
         else:
             video_options = []
     else:

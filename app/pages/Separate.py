@@ -13,7 +13,6 @@ from helpers import (
     load_audio_segment,
     load_list_of_songs,
     plot_audio,
-    st_local_audio,
     url_is_valid,
     file_size_is_valid,
     delete_old_files,
@@ -34,7 +33,10 @@ label_sources = {
 }
 
 separation_mode_to_model = {
-    "Vocals & Instrumental (Faster)": ("vocal_remover", ["vocals.mp3", "no_vocals.mp3"]),
+    "Vocals & Instrumental (Low Quality, Faster)": (
+        "vocal_remover",
+        ["vocals.mp3", "no_vocals.mp3"],
+    ),
     "Vocals & Instrumental (High Quality, Slower)": ("htdemucs", ["vocals.mp3", "no_vocals.mp3"]),
     "Vocals, Drums, Bass & Other (Slower)": (
         "htdemucs",
@@ -85,7 +87,7 @@ def show_results(model_name: str, dir_name_output: str, file_sources: List):
                     use_column_width="always",
                 )
             with cols[1]:
-                st_local_audio(pathname, key=f"output_{file}_{dir_name_output}")
+                st.audio(str(pathname))
     log.info(f"Displaying results for {dir_name_output} - {model_name}")
 
 
@@ -139,8 +141,9 @@ def body():
                     index=len(samples_song),
                     key="select_example",
                 )
-                if name_song != "" and (Path("/tmp") / name_song).exists():
-                    st_local_audio(Path("/tmp") / name_song, key=f"input_from_sample_{name_song}")
+                full_path = f"{in_path}/{name_song}"
+                if name_song != "" and Path(full_path).exists():
+                    st.audio(full_path)
                 else:
                     name_song = None
 
@@ -183,7 +186,7 @@ def body():
                                         os.remove(in_path / filename)
                                         filename = None
                                         return
-                        st_local_audio(in_path / filename, key="input_from_url")
+                        st.audio(f"{in_path}/{filename}")
                     else:
                         st.error(
                             "Failed to download audio file. Try to download it manually and upload it."
@@ -194,7 +197,7 @@ def body():
         separation_mode = st.selectbox(
             "Choose the separation mode",
             [
-                "Vocals & Instrumental (Faster)",
+                "Vocals & Instrumental (Low Quality, Faster)",
                 "Vocals & Instrumental (High Quality, Slower)",
                 "Vocals, Drums, Bass & Other (Slower)",
                 "Vocal, Drums, Bass, Guitar, Piano & Other (Slowest)",
@@ -202,7 +205,7 @@ def body():
             on_change=reset_execution(),
             key="separation_mode",
         )
-        if separation_mode == "Vocals & Instrumental (Faster)":
+        if separation_mode == "Vocals & Instrumental (Low Quality, Faster)":
             max_duration = 30
         else:
             max_duration = 15

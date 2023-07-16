@@ -18,8 +18,8 @@ COPY img ./img
 
 RUN wget --progress=bar:force:noscroll https://huggingface.co/fabiogra/baseline_vocal_remover/resolve/main/baseline.pth
 
-RUN mkdir -p /tmp/ /tmp/vocal_remover /.cache /.config && \
-    chmod 777 /tmp /tmp/vocal_remover /.cache /.config
+RUN mkdir -p /tmp/ /tmp/vocal_remover /.cache /.config /tmp/htdemucs /tmp/htdemucs_6s && \
+    chmod 777 /tmp /tmp/vocal_remover /.cache /.config /tmp/htdemucs /tmp/htdemucs_6s
 
 ENV PYTHONPATH "${PYTHONPATH}:/app"
 

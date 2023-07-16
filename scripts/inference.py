@@ -1,13 +1,20 @@
 import argparse
 from pathlib import Path
-
 import warnings
+
+from pydub import AudioSegment
+
 from app.service.vocal_remover.runner import load_model, separate
 from app.service.demucs_runner import separator
 
 warnings.simplefilter("ignore", UserWarning)
 warnings.simplefilter("ignore", FutureWarning)
 warnings.filterwarnings("ignore", module="streamlit")
+
+
+def convert_to_mp3(input_file, output_file):
+    audio = AudioSegment.from_file(input_file)
+    audio.export(output_file, format="mp3")
 
 
 def main():
@@ -53,6 +60,7 @@ def main():
             output_dir=args.output_dir,
             only_no_vocals=True,
         )
+    convert_to_mp3(input_file, input_file)
 
 
 if __name__ == "__main__":

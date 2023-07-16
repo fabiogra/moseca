@@ -1,15 +1,9 @@
-import logging
-
 import streamlit as st
-from helpers import switch_page
+from loguru import logger as log
 from streamlit_option_menu import option_menu
-from style import CSS
 
-logging.basicConfig(
-    format="%(asctime)s %(levelname)-8s %(message)s",
-    level=logging.INFO,
-    datefmt="%Y-%m-%d %H:%M:%S",
-)
+from helpers import switch_page
+from style import CSS
 
 DEFAULT_PAGE = "Separate"
 
@@ -56,6 +50,7 @@ def header(logo_and_title=True):
         key="",
     )
     if page != st.session_state.get("page", DEFAULT_PAGE):
+        log.info(f"Go to {page}")
         switch_page(page)
 
     if logo_and_title:

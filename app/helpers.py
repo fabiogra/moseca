@@ -130,6 +130,7 @@ def _standardize_name(name: str) -> str:
 
 @st.cache_data(show_spinner=False)
 def switch_page(page_name: str):
+    st.session_state.executed = False
     st.session_state.page = page_name
 
     page_name = _standardize_name(page_name)

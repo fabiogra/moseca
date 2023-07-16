@@ -66,7 +66,7 @@ def show_karaoke(pathname):
     with st.columns([1, 4, 1])[1]:
         if events.name == "onPlay":
             sess.player_restart = True
-            log.info(f"Play Karaoke - {sess.selected_value}")
+            log.info(f"Play Karaoke - {sess.selected_value} - {sess.delay}s delay")
 
         elif (
             events.name == "onProgress"
@@ -140,7 +140,9 @@ def body():
     if selected_value is None or selected_value == "":
         with yt_cols[2]:
             if st.button("🎲 Random song", use_container_width=True):
+                reset_karaoke()
                 sess.last_dir, sess.url = get_random_song()
+                log.info(f"Random song - {sess.last_dir}")
                 sess.selected_value = sess.last_dir
                 sess.random_song = True
                 sess.video_options = []
@@ -182,6 +184,7 @@ def body():
                         with st.spinner(
                             "Separating vocals from music, it could take a few minutes... Don't close this page!"
                         ):
+                            log.info(f"Separating vocals from {sess.selected_value}")
                             sess.filename = download_audio_from_youtube(sess.url, in_path)
                             if sess.filename is None:
                                 st.stop()
@@ -193,6 +196,7 @@ def body():
                             if cancel_button.button(
                                 "Cancel", use_container_width=True, type="secondary"
                             ):
+                                log.info(f"Cancel separation of vocals from {filename}")
                                 st.experimental_rerun()
                             separate(
                                 input=in_path / filename,
@@ -205,6 +209,8 @@ def body():
                             sess.last_dir = ".".join(sess.filename.split(".")[:-1])
                             sess.executed = True
                             cancel_button.empty()
+                            log.info(f"Separating Done - {sess.selected_value}")
+
                 else:
                     sess.executed = True
 

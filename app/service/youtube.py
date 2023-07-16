@@ -4,6 +4,7 @@ import re
 import string
 from typing import List
 
+from loguru import logger as log
 import streamlit as st
 import yt_dlp
 from pytube import Search
@@ -26,7 +27,7 @@ def download_audio_from_youtube(url, output_path):
     if not os.path.exists(output_path):
         os.makedirs(output_path)
 
-    with yt_dlp.YoutubeDL() as ydl:
+    with yt_dlp.YoutubeDL({"quiet": True}) as ydl:
         info_dict = ydl.extract_info(url, download=False)
     if info_dict.get("duration", 0) > 360:
         st.error("Song is too long. Please use a song no longer than 6 minutes.")
@@ -43,7 +44,7 @@ def download_audio_from_youtube(url, output_path):
             }
         ],
         "outtmpl": os.path.join(output_path, video_title),
-        #'quiet': True,
+        "quiet": True,
     }
     with yt_dlp.YoutubeDL(ydl_opts) as ydl:
         ydl.download([url])
@@ -56,6 +57,7 @@ def query_youtube(query: str) -> Search:
 
 
 def search_youtube(query: str, limit=5) -> List:
+    log.info(f"{query}")
     if len(query) > 3:
         search = query_youtube(query + " lyrics")
         st.session_state.search_results = search.results

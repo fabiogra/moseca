@@ -65,7 +65,11 @@ def body():
         <img src="https://img.shields.io/badge/🤗%20Hugging%20Face-Spaces-blue"
         alt="Hugging Face Spaces"></a> or locally with </font>
         [![Docker Call](https://img.shields.io/badge/-Docker%20Image-blue?logo=docker&labelColor=white)](https://huggingface.co/spaces/fabiogra/moseca/discussions?docker=true)
-        <font size="3"> in just one click. </font>
+        <font size="3"> in just one click.
+
+        Speed up the music separation process with ready-to-use
+        [![Open in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/1ODoK3VXajprNbskqy7G8P1h-Zom92TMA?usp=sharing)
+        with GPU support.</font>
 
         <br>
 
@@ -99,10 +103,13 @@ def body():
         ### Are there any limitations?
         <font size="3">Yes, in this environment there are some limitations regarding lenght processing
         and CPU usage to allow a smooth experience for all users.
+        <b>If you want to remove these limitations you can deploy a Moseca app in your personal
+        environment like in the <a href="https://huggingface.co/spaces/fabiogra/moseca?duplicate=true"><img src="https://img.shields.io/badge/🤗%20Hugging%20Face-Spaces-blue" alt="Hugging Face Spaces"></a> or locally with [![Docker Call](https://img.shields.io/badge/-Docker%20Image-blue?logo=docker&labelColor=white)](https://huggingface.co/spaces/fabiogra/moseca/discussions?docker=true)
 
-        <b>If you want to <u>remove these limitations</u> you can deploy a Moseca app in your personal
-        environment like in the <a href="https://huggingface.co/spaces/fabiogra/moseca?duplicate=true"><img src="https://img.shields.io/badge/🤗%20Hugging%20Face-Spaces-blue" alt="Hugging Face Spaces"></a> or locally with [![Docker Call](https://img.shields.io/badge/-Docker%20Image-blue?logo=docker&labelColor=white)](https://huggingface.co/spaces/fabiogra/moseca/discussions?docker=true)</b>
+        You can also speed up the music separation process by [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/1ODoK3VXajprNbskqy7G8P1h-Zom92TMA?usp=sharing) with GPU support.</b>
         </font>
+
+
         ### How does Moseca work?
         <font size="3"> Moseca utilizes the Hybrid Spectrogram and Waveform Source Separation ([DEMUCS](https://github.com/facebookresearch/demucs)) model from Facebook. For fast karaoke vocal removal, Moseca uses the AI vocal remover developed by [tsurumeso](https://github.com/tsurumeso/vocal-remover).
         </font>

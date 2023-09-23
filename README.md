@@ -10,10 +10,7 @@ tags: ["audio", "music", "vocal-removal", "karaoke", "music-separation", "music-
 pinned: true
 ---
 
-<p align="center">
-  <img src="img/logo_moseca.png" alt="logo" width="70" />
-</p>
-<h2 align="center">Moseca</h1><p align="center">Music Source Separation & Karaoke</p>
+<h2 align="center">Moseca - Music Source Separation & Karaoke</h1>
 <p align="center">
     <a href="https://colab.research.google.com/drive/1ODoK3VXajprNbskqy7G8P1h-Zom92TMA?usp=sharing">
         <img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab">

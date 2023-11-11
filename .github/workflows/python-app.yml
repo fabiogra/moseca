@@ -42,4 +42,6 @@ jobs:
       run: ls -l
     - name: Test with pytest
       run: |
+        export PYTHONPATH=$(pwd):$(pwd)/app
+        echo "PYTHONPATH is set to $PYTHONPATH"
         pytest

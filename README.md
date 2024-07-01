@@ -82,7 +82,7 @@ streamlit run app/header.py
 ### Docker
 You can also run the app with Docker:
 ```bash
-docker build -t moseca .
+docker buildx build -t moseca .
 docker run -it --rm -p 7860:7860 $(DOCKER_IMAGE_NAME)
 ```
 or pull the image from Hugging Face Spaces:

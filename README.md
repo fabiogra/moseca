@@ -95,6 +95,40 @@ You can set the following environment variables to limit the resources used by t
 - ENV_LIMITATION=true
 - LIMIT_CPU=true
 
+#### Docker Compose
+
+```bash
+docker compose up
+```
+
+To limit the resources used by the app:
+```yaml
+# docker-compose.yml
+
+services:
+  moseca:
+    # [...]
+    variables:
+      ENV_LIMITATION: true
+      LIMIT_CPU: true
+```
+
+If you need GPU support, add the capability:
+```yaml
+# docker-compose.yml
+
+services:
+  moseca:
+    # [...]
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: [gpu]
+```
+
 ### (Optional) Preprocess samples
 If you want to preprocess the samples used in the demo, you need to set the env variable `PREPARE_SAMPLES=true` as a secret (create the file `run/secrets/PREPARE_SAMPLES` with `true` value inside).
 

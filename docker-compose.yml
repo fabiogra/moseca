@@ -1,0 +1,17 @@
+services:
+  moseca:
+    build: .
+    ports:
+      - 7860:7860
+    #uncomment to limit CPU usage:
+    #variables:
+      #ENV_LIMITATION: true
+      #LIMIT_CPU: true
+    #uncomment if you need GPU support:
+    #deploy:
+      #resources:
+        #reservations:
+          #devices:
+            #- driver: nvidia
+              #count: 1
+              #capabilities: [gpu]
